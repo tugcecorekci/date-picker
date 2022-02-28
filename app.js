@@ -14,13 +14,16 @@ let currentMonth = today.getMonth()
 let currentDay = today.getDay()
 let currentHour = today.getHours()
 let currentMinute = String(today.getMinutes()).padStart(2, '0')
-let currentSec = String(today.getSeconds()).padStart(2, '0')
 
 function currentDateTime() {
     let yo = today.toLocaleDateString()
     showScreen.value = `${yo} ${currentHour}:${currentMinute}`
     let monthName = months[currentMonth]
     selectedMonthYear.textContent = `${monthName} ${currentYear}`
+    let newTime = document.createElement('option')
+    newTime.setAttribute('selected', true)
+    newTime.textContent = `${currentHour}:${currentMinute}`
+    showTime.append(newTime)
 }
 
 currentDateTime()
