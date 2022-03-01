@@ -164,7 +164,7 @@ html {
     color: white;
 }
 
-.previous, .next {
+#previous, #next {
     color: grey;
 }
 
