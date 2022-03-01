@@ -42,7 +42,6 @@ addCurrentTime()
 screenTime.addEventListener('change', changeTime)
 
 function changeTime() {
-    //selected date ekle
     screenTime = document.querySelector('#screenTime')
     let stringDate = today.toLocaleDateString()
     screenInput.value = `${stringDate} ${screenTime.value}`
@@ -94,6 +93,10 @@ function previousMonth() {
         tableDays.removeChild(tableDays.lastChild);
     }
     currentMonth = (today.getMonth() + 11) % 12
+    if (currentMonth == 11) {
+        currentYear -= 1
+        today.setFullYear(currentYear)
+    }
     today.setMonth(currentMonth)
     daysOfMonth()
     addCurrentDate()
@@ -106,6 +109,10 @@ function nextMonth() {
         tableDays.removeChild(tableDays.lastChild);
     }
     currentMonth = (today.getMonth() + 1) % 12
+    if (currentMonth == 0) {
+        currentYear += 1
+        today.setFullYear(currentYear)
+    }
     today.setMonth(currentMonth)
     daysOfMonth()
     addCurrentDate()
