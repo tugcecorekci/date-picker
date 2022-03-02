@@ -103,6 +103,7 @@ html {
 }
 
 .table {
+    display: none;
     outline: solid 1px yellowgreen;
     width: 37rem;
     font-size: 1.5rem;

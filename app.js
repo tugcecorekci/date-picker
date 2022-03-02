@@ -184,3 +184,20 @@ function nextMonth() {
     addCurrentDateInput()
     changeTime()
 }
+
+//click event for screen
+const table = document.querySelector('.table')
+console.log(table)
+screenInput.addEventListener('click', toggleFunc)
+
+function toggleFunc() {
+    if (table.style.display !== "block") {
+        table.style.display = "block"
+    }
+    else {
+        table.style.display = "none"
+    }
+    console.log('clicked')
+}
+
+
