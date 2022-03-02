@@ -7,7 +7,7 @@ const nextBtn = document.querySelector('#right')
 let selectedMonthYear = document.querySelector('h1')
 let screenTime = document.querySelector('#screenTime')
 
-//current date and time - screen
+//current date and time values - screen
 let today = new Date()
 let currentYear = today.getFullYear()
 let currentMonth = today.getMonth()
@@ -17,10 +17,8 @@ let currentHour = today.getHours()
 let currentMinute = String(today.getMinutes()).padStart(2, '0')
 
 //screening current date
-
 function addCurrentDateInput() {
-    let stringDate = today.toLocaleDateString()
-    screenInput.value = `${stringDate} ${currentHour}:${currentMinute}`
+    screenInput.value = `${currentYear}-${currentMonth + 1}-${currentDate} ${currentHour}:${currentMinute}`
     let monthName = months[currentMonth]
     selectedMonthYear.textContent = `${monthName} ${currentYear}`
 }
@@ -28,7 +26,6 @@ function addCurrentDateInput() {
 addCurrentDateInput()
 
 //adding current time to screenInput
-
 function addCurrentTime() {
     let newTime = document.createElement('option')
     newTime.setAttribute('selected', true)
@@ -43,8 +40,7 @@ screenTime.addEventListener('change', changeTime)
 
 function changeTime() {
     screenTime = document.querySelector('#screenTime')
-    let stringDate = today.toLocaleDateString()
-    screenInput.value = `${stringDate} ${screenTime.value}`
+    screenInput.value = `${currentYear}-${currentMonth + 1}-${currentDate} ${screenTime.value}`
 }
 
 //aylık görünüm
@@ -71,9 +67,6 @@ function daysOfMonth() {
         dayNum.setAttribute('id', 'uptodate')
         tableDays.appendChild(dayNum)
         dayNum.addEventListener('click', () => makeCurrent(dayNum))
-        // if (i + 1 == currentDate) {
-        //     dayNum.setAttribute('class', 'current')
-        // }
     }
     let daysCount = prevDayCount + lastDay
     let nextMonthDay = null
@@ -92,14 +85,20 @@ function makeCurrent(e) {
     let selectCurrent = document.querySelector('.current')
     selectCurrent.removeAttribute('class')
     e.setAttribute('class', 'current')
-    console.log(e.textContent)
-    // if (e.className == 'previous') {
-    //     previousMonth()
-    // }
-    // else if (e.className == 'next') {
-    //     nextMonth()
-    // }
+    //inputta günü değiştir
+    if (e.id == 'previous') {
+        previousMonth()
+    }
+    else if (e.id == 'next') {
+        nextMonth()
+    }
+    let newSelectCurrent = document.querySelector('.current')
+    currentDate = newSelectCurrent.textContent
+    console.log(currentDate)
+    screenTime = document.querySelector('#screenTime')
+    screenInput.value = `${currentYear}-${currentMonth + 1}-${currentDate} ${screenTime.value}`
 }
+
 
 daysOfMonth()
 
@@ -129,11 +128,22 @@ function previousMonth() {
     today.setMonth(currentMonth)
     daysOfMonth()
     let newCurrent = document.querySelectorAll('#uptodate')
+    let newDayCount = new Date(currentYear, currentMonth + 1, 0).getDate()
+    if (lastCurrent > newDayCount) {
+        for (let x = 0; x < newDayCount; x++) {
+            if (newCurrent[x].textContent == newDayCount) {
+                newCurrent[x].setAttribute('class', 'current')
+            }
+
+        }
+    }
     newCurrent.forEach(day => {
         if (day.textContent == lastCurrent) {
             day.setAttribute('class', 'current')
         }
     })
+    let f = document.querySelector('.current')
+    currentDate = f.textContent
     addCurrentDateInput()
     changeTime()
 }
@@ -169,7 +179,8 @@ function nextMonth() {
             day.setAttribute('class', 'current')
         }
     })
-
+    let f = document.querySelector('.current')
+    currentDate = f.textContent
     addCurrentDateInput()
     changeTime()
 }
