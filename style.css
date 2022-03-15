@@ -54,7 +54,6 @@ table {
 }
 
 html {
-
     font-family: 'Nunito', sans-serif;
     font-size: 62.5%;
     font-weight: 400;
@@ -196,3 +195,11 @@ select {
     border: 0;
     background: yellowgreen;
 }
+
+::-moz-selection {
+    background: yellowgreen;
+  }
+  
+  ::selection {
+    background: yellowgreen;
+  }

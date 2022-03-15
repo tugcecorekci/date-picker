@@ -1,13 +1,14 @@
 const months = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"]
 
-let screenInput = document.querySelector('#screenInput')
 const previousBtn = document.querySelector('#left')
 const nextBtn = document.querySelector('#right')
+const table = document.querySelector('.table')
 
+let screenInput = document.querySelector('#screenInput')
 let selectedMonthYear = document.querySelector('h1')
 let screenTime = document.querySelector('#screenTime')
 
-//current date and time values - screen
+//current date and time values
 let today = new Date()
 let currentYear = today.getFullYear()
 let currentMonth = today.getMonth()
@@ -16,7 +17,7 @@ let currentDay = today.getDay()
 let currentHour = today.getHours()
 let currentMinute = String(today.getMinutes()).padStart(2, '0')
 
-//screening current date
+//adding current date to screenInput
 function addCurrentDateInput() {
     screenInput.value = `${currentYear}-${currentMonth + 1}-${currentDate} ${currentHour}:${currentMinute}`
     let monthName = months[currentMonth]
@@ -43,7 +44,7 @@ function changeTime() {
     screenInput.value = `${currentYear}-${currentMonth + 1}-${currentDate} ${screenTime.value}`
 }
 
-//aylık görünüm
+//month display
 let tableDays = document.querySelector('.days')
 
 function daysOfMonth() {
@@ -94,15 +95,13 @@ function makeCurrent(e) {
     }
     let newSelectCurrent = document.querySelector('.current')
     currentDate = newSelectCurrent.textContent
-    console.log(currentDate)
     screenTime = document.querySelector('#screenTime')
     screenInput.value = `${currentYear}-${currentMonth + 1}-${currentDate} ${screenTime.value}`
 }
 
-
 daysOfMonth()
 
-//mark current day - set class = current
+//get current day - set class = current
 function getCurrent() {
     let cd = document.querySelectorAll('#uptodate')
     cd.forEach(c => {
@@ -113,7 +112,7 @@ function getCurrent() {
 }
 getCurrent()
 
-//prev-next
+//prev-next button events
 previousBtn.addEventListener('click', previousMonth)
 function previousMonth() {
     let lastCurrent = document.querySelector('.current').textContent
@@ -134,7 +133,6 @@ function previousMonth() {
             if (newCurrent[x].textContent == newDayCount) {
                 newCurrent[x].setAttribute('class', 'current')
             }
-
         }
     }
     newCurrent.forEach(day => {
@@ -147,7 +145,6 @@ function previousMonth() {
     addCurrentDateInput()
     changeTime()
 }
-
 
 nextBtn.addEventListener('click', nextMonth)
 function nextMonth() {
@@ -163,7 +160,6 @@ function nextMonth() {
     }
     today.setMonth(currentMonth)
     daysOfMonth()
-
     let newCurrent = document.querySelectorAll('#uptodate')
     let newDayCount = new Date(currentYear, currentMonth + 1, 0).getDate()
     if (lastCurrent > newDayCount) {
@@ -185,9 +181,7 @@ function nextMonth() {
     changeTime()
 }
 
-//click event for screen
-const table = document.querySelector('.table')
-console.log(table)
+//adding click event for screenInput
 screenInput.addEventListener('click', toggleFunc)
 
 function toggleFunc() {
@@ -197,7 +191,4 @@ function toggleFunc() {
     else {
         table.style.display = "none"
     }
-    console.log('clicked')
 }
-
-
